@@ -25,11 +25,6 @@ webplodeapp.config(['$routeProvider', '$locationProvider',
       .when('/game', {
 		    templateUrl: 'templates/game.html',
 		    controller: 'GameController'
-      })
-
-      .otherwise({
-        templateUrl: 'templates/home.html',
-        controller: 'HomeController'
       });
 }]);
 
@@ -42,7 +37,7 @@ webplodeapp.controller('HomeController',
 
 
 webplodeapp.controller('PrepareController',
-  [PlayerService, '$scope', function($scope) {
+  ['PlayerService', '$scope', function(PlayerService, $scope) {
 
   // Initialize the model variables
   $scope.player1Name = "Player 1";
@@ -53,9 +48,9 @@ webplodeapp.controller('PrepareController',
 }]);
 
 webplodeapp.controller('GameController',
-  [PlayerService, '$scope', function($scope) {
+  ['PlayerService', '$scope', function(PlayerService, $scope) {
 
-  $scope.player1Name = PlayerService.getPlayer1Name();
+  $scope.player1Name = "Player 1Game";
   $scope.player2Name = PlayerService.getPlayer2Name();
 
 }]);
