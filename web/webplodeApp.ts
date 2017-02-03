@@ -1,6 +1,10 @@
+import {PlayerService} from './player.service.ts';
+
 declare var angular: any;
 
 const webplodeapp = angular.module('webplodeapp', ['ngRoute']);
+
+webplodeapp.service('PlayerService', PlayerService);
 
 webplodeapp.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -38,15 +42,20 @@ webplodeapp.controller('HomeController',
 
 
 webplodeapp.controller('PrepareController',
-  ['$scope', function($scope) {
+  [PlayerService, '$scope', function($scope) {
 
-	$scope.message = 'Prepare';
+  // Initialize the model variables
+  $scope.player1Name = "Player 1";
+  $scope.player2Name = "Player 2";
 
+  PlayerService.setPlayer1Name($scope.player1Name);
+  PlayerService.setPlayer2Name($scope.player2Name);
 }]);
 
 webplodeapp.controller('GameController',
-  ['$scope', function($scope) {
+  [PlayerService, '$scope', function($scope) {
 
-	$scope.message = 'Game';
+  $scope.player1Name = PlayerService.getPlayer1Name();
+  $scope.player2Name = PlayerService.getPlayer2Name();
 
 }]);
