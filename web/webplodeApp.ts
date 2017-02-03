@@ -1,9 +1,11 @@
 declare var angular: any;
 
-var webplodeapp = angular.module('webplodeapp', ['ngRoute']);
+const webplodeapp = angular.module('webplodeapp', ['ngRoute']);
 
-webplodeapp.config(['$routeProvider',
-  function($routeProvider) {
+webplodeapp.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
+
     $routeProvider
 
       .when('/', {
@@ -19,6 +21,11 @@ webplodeapp.config(['$routeProvider',
       .when('/game', {
 		    templateUrl: 'templates/game.html',
 		    controller: 'GameController'
+      })
+
+      .otherwise({
+        templateUrl: 'templates/home.html',
+        controller: 'HomeController'
       });
 }]);
 
