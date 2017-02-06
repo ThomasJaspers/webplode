@@ -6,8 +6,8 @@ export class PlayerService {
   player2: IPlayer;
 
   constructor() {
-    let player1 = {name: "", number: 1, color: "red"};
-    let player2 = {name: "", number: 2, color: "blue"};
+    this.player1 = {name: "", number: 1, color: "red"};
+    this.player2 = {name: "", number: 2, color: "blue"};
   }
 
   public setPlayer1Name(name: string) {

@@ -4,7 +4,7 @@ declare var angular: any;
 
 const webplodeapp = angular.module('webplodeapp', ['ngRoute']);
 
-webplodeapp.service('PlayerService', new PlayerService());
+webplodeapp.service('PlayerService', PlayerService);
 
 webplodeapp.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -49,7 +49,7 @@ webplodeapp.controller('PrepareController',
 webplodeapp.controller('GameController',
   ['$scope', 'PlayerService', function($scope, PlayerService) {
 
-  $scope.player1Name = "Player 1Game";
+  $scope.player1Name = PlayerService.getPlayer1Name();
   $scope.player2Name = PlayerService.getPlayer2Name();
 
 }]);
