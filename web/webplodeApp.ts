@@ -38,12 +38,16 @@ webplodeapp.controller('HomeController',
 webplodeapp.controller('PrepareController',
   ['$scope', 'PlayerService', function($scope, PlayerService) {
 
-  // Initialize the model variables
-  $scope.player1Name = "Player 1";
-  $scope.player2Name = "Player 2";
+  $scope.player1Name = "Player Red";
+  $scope.player2Name = "Player Blue";
 
   PlayerService.setPlayer1Name($scope.player1Name);
   PlayerService.setPlayer2Name($scope.player2Name);
+
+  $scope.startGame = function() {
+    PlayerService.setPlayer1Name($scope.player1Name);
+    PlayerService.setPlayer2Name($scope.player2Name);
+  }
 }]);
 
 webplodeapp.controller('GameController',
