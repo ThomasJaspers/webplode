@@ -1,3 +1,25 @@
-<p>dashboard works!</p>
+<div class="container">
 
-<app-player [player]="players[0]"></app-player>
+  <p>WebPlode</p>
+
+  <div class="row">
+    <div class="col-4">
+      <app-player
+          *ngFor="let p of players; trackBy: trackPlayer"
+          [player]="p">
+      </app-player>
+    </div>
+
+    <div class="col-8">
+      <div class="row" *ngFor="let row of board;">
+        <app-field
+          *ngFor="let f of row;"
+          [field]="f"
+          (makeMoveEvent)=doMakeMove($event)>
+        </app-field>
+      </div>
+    </div>
+
+  </div>
+
+</div>
