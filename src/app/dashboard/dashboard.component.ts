@@ -19,17 +19,43 @@ export class DashboardComponent implements OnInit {
 
     console.log('Field Event caught ' + field.row + ' ' + field.col);
 
-    const fieldAfterMove = {
-      ...field,
-      color: 'green'
-    };
+    if (field.owner === 0 || field.owner === this.activePlayer.number) {
 
-    this.updateBoard(fieldAfterMove);
+      const fieldAfterMove = {
+        ...field,
+        owner: this.activePlayer.number,
+        color: this.activePlayer.color,
+        load: ++field.load,
+      };
+
+      this.updateBoard(fieldAfterMove);
+      this.explode(fieldAfterMove);
+      this.toggleActivePlayer();
+    }
   }
 
+  explode(field: Field) {
+    if (field.load > field.neighbours) {
+      const fieldAfterExplosion = {
+        ...field,
+        load: 1,
+      };
+
+      this.updateBoard(fieldAfterExplosion);
+    }
+
+  }
 
   updateBoard(field: Field) {
     this.board[field.row][field.col] = field;
+  }
+
+  toggleActivePlayer() {
+    if (this.activePlayer.number === 1) {
+      this.activePlayer = this.players[1];
+    } else {
+      this.activePlayer  = this.players[0];
+    }
   }
 
   trackPlayer(index: number, item: Player) {
@@ -45,12 +71,29 @@ export class DashboardComponent implements OnInit {
 
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
+        let neighbours = 0;
+        if (row === 0 && col === 0) {
+          neighbours = 3;
+        } else if (row === 0 && col === 7) {
+          neighbours = 3;
+        } else if (row === 7 && col === 0) {
+          neighbours = 3;
+        } else if (row === 7 && col === 7) {
+          neighbours = 3;
+        } else if (row === 0 || row === 7 || col === 0 || col === 7) {
+          neighbours = 5;
+        } else {
+          neighbours = 8;
+        }
+
+
         this.board[row][col] = {
-          color: 'black',
+          color: 'lightgrey',
           owner: 0,
           load: 0,
           row,
           col,
+          neighbours,
         }
       };
     }

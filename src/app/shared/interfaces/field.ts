@@ -4,4 +4,5 @@ export interface Field {
   owner: number;
   row: number;
   col: number;
+  neighbours: number;
 }
