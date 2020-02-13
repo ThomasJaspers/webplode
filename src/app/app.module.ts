@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PlayerComponent } from './player/player.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -12,7 +13,7 @@ import { PlayerComponent } from './player/player.component';
     PlayerComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
