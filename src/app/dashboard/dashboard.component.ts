@@ -108,9 +108,9 @@ export class DashboardComponent implements OnInit {
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         if (this.board[row][col].owner === this.players[0].number) {
-          this.players[0].score += this.board[row][col].load;
+          this.players[0].score++;
         } else if (this.board[row][col].owner === this.players[1].number) {
-          this.players[1].score += this.board[row][col].load;
+          this.players[1].score++;
         }
       }
     }

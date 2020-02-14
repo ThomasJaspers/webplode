@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Player } from '../shared/interfaces/player';
 
 @Component({
   selector: 'app-resultview',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./resultview.component.scss']
 })
 export class ResultviewComponent implements OnInit {
+
+  @Input() numberOfMoves: number;
+  @Input() activePlayer: Player;
 
   constructor() { }
 
