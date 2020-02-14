@@ -1,6 +1,12 @@
-<div class="row" style="margin-top: 10px">
-  <div class="col-12 text-center">
-    <p>Number of Moves: {{ numberOfMoves }}</p>
-    <p>Active Player: {{ activePlayer.name }}</p>
+<div class="row" style="margin-top: 25px">
+  <div class="col-4"></div>
+  <div class="col-8">
+    <p class="lead">
+      <strong>Active Player: </strong><font color="{{ activePlayer.color }}">{{ activePlayer.name }}</font>
+      <b *ngIf="!this.gameRunning"> is the Winner!</b>
+    </p>
+    <p class="lead">
+      <strong>Number of Moves: </strong>{{ numberOfMoves }}
+    </p>
   </div>
 </div>

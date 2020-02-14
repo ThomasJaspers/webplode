@@ -10,6 +10,7 @@ export class ResultviewComponent implements OnInit {
 
   @Input() numberOfMoves: number;
   @Input() activePlayer: Player;
+  @Input() gameRunning: boolean;
 
   constructor() { }
 
