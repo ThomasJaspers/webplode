@@ -12,14 +12,14 @@ export class DashboardComponent implements OnInit {
   players: Player[];
   board: Field[][];
   activePlayer: Player;
+  gameRunning = true;
+  numberOfMoves = 0;
 
   constructor() { }
 
   doMakeMove(field: Field) {
 
-    console.log('Field Event caught ' + field.row + ' ' + field.col);
-
-    if (field.owner === 0 || field.owner === this.activePlayer.number) {
+    if (this.gameRunning && (field.owner === 0 || field.owner === this.activePlayer.number)) {
 
       const fieldAfterMove = {
         ...field,
@@ -28,22 +28,65 @@ export class DashboardComponent implements OnInit {
         load: ++field.load,
       };
 
+      this.numberOfMoves++;
       this.updateBoard(fieldAfterMove);
-      this.explode(fieldAfterMove);
+      this.explodeBoard();
+      this.updatePlayerScores();
+      this.checkGameHasEnded();
       this.toggleActivePlayer();
     }
   }
 
-  explode(field: Field) {
+  explodeBoard() {
+
+    let changeDetected = 1;
+
+    while (changeDetected > 0) {
+      changeDetected = 0;
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          const fieldToCheck = this.board[row][col];
+          changeDetected += this.explodeField(fieldToCheck);
+        }
+      }
+    }
+  }
+
+  explodeField(field: Field): number {
+
+    let explosionDetected = 0;
+
+    // Check field itsself
     if (field.load > field.neighbours) {
       const fieldAfterExplosion = {
         ...field,
         load: 1,
       };
 
+      explosionDetected = 1;
       this.updateBoard(fieldAfterExplosion);
+
+      // Check affected fields
+      this.explodeAffectedField(field.row - 1, field.col);
+      this.explodeAffectedField(field.row + 1, field.col);
+      this.explodeAffectedField(field.row, field.col + 1);
+      this.explodeAffectedField(field.row, field.col - 1);
+      this.explodeAffectedField(field.row - 1, field.col - 1);
+      this.explodeAffectedField(field.row - 1, field.col + 1);
+      this.explodeAffectedField(field.row + 1, field.col - 1);
+      this.explodeAffectedField(field.row + 1, field.col + 1);
     }
 
+    return explosionDetected;
+  }
+
+  explodeAffectedField(row: number, col: number) {
+    if (row >= 0 && row < 8 && col >= 0 && col < 8 ) {
+      const field = this.board[row][col];
+      field.owner = this.activePlayer.number;
+      field.color = this.activePlayer.color;
+      field.load = field.load + 1;
+    }
   }
 
   updateBoard(field: Field) {
@@ -55,6 +98,27 @@ export class DashboardComponent implements OnInit {
       this.activePlayer = this.players[1];
     } else {
       this.activePlayer  = this.players[0];
+    }
+  }
+
+  updatePlayerScores() {
+    this.players[0].score = 0;
+    this.players[1].score = 0;
+
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        if (this.board[row][col].owner === this.players[0].number) {
+          this.players[0].score += this.board[row][col].load;
+        } else if (this.board[row][col].owner === this.players[1].number) {
+          this.players[1].score += this.board[row][col].load;
+        }
+      }
+    }
+  }
+
+  checkGameHasEnded() {
+    if (this.numberOfMoves > 3 && (this.players[0].score === 0 || this.players[1].score === 0)) {
+      this.gameRunning = false;
     }
   }
 

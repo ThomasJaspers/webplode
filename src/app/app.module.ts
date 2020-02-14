@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PlayerComponent } from './player/player.component';
 import { FieldComponent } from './field/field.component';
+import { ResultviewComponent } from './resultview/resultview.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { FieldComponent } from './field/field.component';
     AppComponent,
     DashboardComponent,
     PlayerComponent,
-    FieldComponent
+    FieldComponent,
+    ResultviewComponent
   ],
   imports: [
     BrowserModule,
