@@ -33,7 +33,9 @@ export class DashboardComponent implements OnInit {
       this.explodeBoard();
       this.updatePlayerScores();
       this.checkGameHasEnded();
-      this.toggleActivePlayer();
+      if (this.gameRunning) {
+        this.toggleActivePlayer();
+      }
     }
   }
 
